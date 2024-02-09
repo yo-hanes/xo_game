@@ -5,7 +5,6 @@ bool checkForWin();
 bool checkForDraw();
 void endGame();
 
-
 const int redPins[9] = {13, 10, 7, 4, 14, 17, 20, 23, 26};
 const int greenPins[9] = {12, 9, 6, 3, 15, 18, 21, 24, 27};
 const int bluePins[9] = {11, 8, 5, 2, 16, 19, 22, 25, 28};
