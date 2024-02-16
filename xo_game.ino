@@ -80,25 +80,21 @@ void turnOffAllLEDs() {
 }
 
 bool checkForWin() {
-  for (int i = 0; i < 3; i++) {
-    if (checkRow(i)) {
-      return true;
-    }
+   if (digitalWrite(redPins[13], HIGH && digitalWrite(redPins[10], HIGH && digitalWrite(redPins[7], HIGH){
+     Serial.print(" RED WINS ");
   }
-  for (int i = 0; i < 3; i++) {
-    if (checkColumn(i)) {
-      return true;
-    }
+  else if(digitalWrite(redPins[4], HIGH && digitalWrite(redPins[14], HIGH && digitalWrite(redPins[17], HIGH){
+    Serial.print(" RED WINS ");
   }
-
-  if (checkDiagonal(0, 4, 8) || checkDiagonal(2, 4, 6)) {
-    return true;
+  else if(digitalWrite(redPins[20], HIGH && digitalWrite(redPins[23], HIGH && digitalWrite(redPins[26], HIGH){
+    Serial.print(" RED WINS ");
   }
 
-  return false;
 }
+/*
 
 bool checkRow(int row) {
+
   return (buttonState[row * 3] == 1 && buttonState[row * 3 + 1] == 1 && buttonState[row * 3 + 2] == 1);
 }
 
@@ -108,7 +104,7 @@ bool checkColumn(int col) {
 
 bool checkDiagonal(int a, int b, int c) {
   return (buttonState[a] == 1 && buttonState[b] == 1 && buttonState[c] == 1);
-}
+}*/
 
 
 bool checkForDraw() {
