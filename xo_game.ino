@@ -37,11 +37,32 @@ void loop() {
   }
 
   if (checkForWin()) {
-    Serial.print("Player ");
-    Serial.print((currentPlayer == 'X') ? "1" : "2");
-    Serial.println(" wins!");
+
+ if ((digitalRead(redPins[13]) == HIGH && digitalRead(redPins[10]) == HIGH && digitalRead(redPins[7]) == HIGH) ||  // First row
+      (digitalRead(redPins[4]) == HIGH && digitalRead(redPins[14]) == HIGH && digitalRead(redPins[17]) == HIGH) ||  // Second row
+      (digitalRead(redPins[20]) == HIGH && digitalRead(redPins[23]) == HIGH && digitalRead(redPins[26]) == HIGH) ||  // Third row
+      (digitalRead(redPins[13]) == HIGH && digitalRead(redPins[4]) == HIGH && digitalRead(redPins[20]) == HIGH) ||  // First column
+      (digitalRead(redPins[10]) == HIGH && digitalRead(redPins[14]) == HIGH && digitalRead(redPins[23]) == HIGH) ||  // Second column
+      (digitalRead(redPins[7]) == HIGH && digitalRead(redPins[17]) == HIGH && digitalRead(redPins[26]) == HIGH) ||  // Third column
+      (digitalRead(redPins[13]) == HIGH && digitalRead(redPins[14]) == HIGH && digitalRead(redPins[26]) == HIGH) ||  // Diagonal from top-left to bottom-right
+      (digitalRead(redPins[7]) == HIGH && digitalRead(redPins[14]) == HIGH && digitalRead(redPins[20]) == HIGH)) {  // Diagonal from top-right to bottom-left
+    Serial.println("RED WINS!");
     delay(5000);
     endGame();
+  } 
+  else if ((digitalRead(greenPins[12]) == HIGH && digitalRead(greenPins[9]) == HIGH && digitalRead(greenPins[6]) == HIGH) ||  // First row
+           (digitalRead(greenPins[3]) == HIGH && digitalRead(greenPins[15]) == HIGH && digitalRead(greenPins[18]) == HIGH) ||  // Second row
+           (digitalRead(greenPins[21]) == HIGH && digitalRead(greenPins[24]) == HIGH && digitalRead(greenPins[27]) == HIGH) ||  // Third row
+           (digitalRead(greenPins[12]) == HIGH && digitalRead(greenPins[3]) == HIGH && digitalRead(greenPins[21]) == HIGH) ||  // First column
+           (digitalRead(greenPins[9]) == HIGH && digitalRead(greenPins[15]) == HIGH && digitalRead(greenPins[24]) == HIGH) ||  // Second column
+           (digitalRead(greenPins[6]) == HIGH && digitalRead(greenPins[18]) == HIGH && digitalRead(greenPins[27]) == HIGH) ||  // Third column
+           (digitalRead(greenPins[13]) == HIGH && digitalRead(greenPins[14]) == HIGH && digitalRead(greenPins[26]) == HIGH) ||  // Diagonal from top-left to bottom-right
+           (digitalRead(greenPins[7]) == HIGH && digitalRead(greenPins[14]) == HIGH && digitalRead(greenPins[20]) == HIGH)) {  // Diagonal from top-right to bottom-left
+    Serial.println("GREEN WINS!");
+    delay(5000);
+    endGame();
+  } 
+
   } else if (checkForDraw()) {
     Serial.println("It's a draw!");
     delay(5000);
@@ -80,21 +101,25 @@ void turnOffAllLEDs() {
 }
 
 bool checkForWin() {
-   if (digitalWrite(redPins[13], HIGH && digitalWrite(redPins[10], HIGH && digitalWrite(redPins[7], HIGH){
-     Serial.print(" RED WINS ");
+  for (int i = 0; i < 3; i++) {
+    if (checkRow(i)) {
+      return true;
+    }
   }
-  else if(digitalWrite(redPins[4], HIGH && digitalWrite(redPins[14], HIGH && digitalWrite(redPins[17], HIGH){
-    Serial.print(" RED WINS ");
-  }
-  else if(digitalWrite(redPins[20], HIGH && digitalWrite(redPins[23], HIGH && digitalWrite(redPins[26], HIGH){
-    Serial.print(" RED WINS ");
+  for (int i = 0; i < 3; i++) {
+    if (checkColumn(i)) {
+      return true;
+    }
   }
 
+  if (checkDiagonal(0, 4, 8) || checkDiagonal(2, 4, 6)) {
+    return true;
+  }
+
+  return false;
 }
-/*
 
 bool checkRow(int row) {
-
   return (buttonState[row * 3] == 1 && buttonState[row * 3 + 1] == 1 && buttonState[row * 3 + 2] == 1);
 }
 
@@ -104,7 +129,7 @@ bool checkColumn(int col) {
 
 bool checkDiagonal(int a, int b, int c) {
   return (buttonState[a] == 1 && buttonState[b] == 1 && buttonState[c] == 1);
-}*/
+}
 
 
 bool checkForDraw() {
@@ -136,7 +161,7 @@ void endGame() {
   }
 
   turnOffAllLEDs();
-  // Additional reset logic can go here "i try to make the green light for win befor reseting, but i am out of pins :( "
+  
   while (true) {
     
   }
